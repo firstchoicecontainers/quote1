@@ -2,187 +2,133 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>First Choice Containers</title>
 
 <style>
-*{
+html,body{
     margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,Tahoma,sans-serif;
+    height:100%;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-    background:linear-gradient(135deg,#0057B8,#2196F3);
-    color:#fff;
-    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
+    background:linear-gradient(135deg,#0057B8,#1E88E5);
+    color:#fff;
     overflow:hidden;
 }
 
-.wrapper{
+.container{
     text-align:center;
-    width:90%;
-    max-width:550px;
+    padding:20px;
 }
 
 h1{
+    margin:0;
     font-size:42px;
-    margin-bottom:10px;
 }
 
-.first{
+.blue{
     color:#4FC3F7;
 }
 
-.containers{
-    color:#ff3b30;
+.red{
+    color:#FF3B30;
 }
 
 p{
-    opacity:.9;
-    margin-bottom:35px;
+    margin-top:15px;
     font-size:18px;
 }
 
-.spinner{
+.loader{
     width:90px;
     height:90px;
-    margin:auto;
+    margin:35px auto;
+    border:8px solid rgba(255,255,255,.2);
+    border-top:8px solid #fff;
     border-radius:50%;
-    border:8px solid rgba(255,255,255,.15);
-    border-top:8px solid white;
     animation:spin 1s linear infinite;
 }
 
 .progress{
-    margin-top:35px;
-    width:100%;
-    height:12px;
-    border-radius:30px;
+    width:320px;
+    max-width:90%;
+    height:10px;
+    background:rgba(255,255,255,.2);
+    border-radius:20px;
+    margin:auto;
     overflow:hidden;
-    background:rgba(255,255,255,.15);
 }
 
 .bar{
-    width:0%;
     height:100%;
-    background:linear-gradient(90deg,#4FC3F7,#fff,#ff3b30);
-    animation:load 3s linear forwards;
+    width:0%;
+    background:#fff;
+    animation:fill 3s linear forwards;
 }
 
-#status{
-    margin-top:20px;
+#countdown{
+    margin-top:18px;
     font-size:20px;
-    font-weight:600;
+    font-weight:bold;
 }
-
-.footer{
-    margin-top:25px;
-    opacity:.8;
-    font-size:14px;
-}
-
-.box{
-    position:absolute;
-    width:80px;
-    height:45px;
-    border:2px solid rgba(255,255,255,.4);
-    border-radius:5px;
-    animation:move 12s linear infinite;
-}
-
-.box::before{
-    content:"";
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:9px;
-    height:3px;
-    background:white;
-    box-shadow:0 8px white,0 16px white;
-}
-
-.b1{top:15%;left:-120px;}
-.b2{top:45%;left:-180px;animation-delay:3s;}
-.b3{top:75%;left:-140px;animation-delay:6s;}
 
 @keyframes spin{
 100%{transform:rotate(360deg);}
 }
 
-@keyframes load{
+@keyframes fill{
 100%{width:100%;}
-}
-
-@keyframes move{
-0%{transform:translateX(0);}
-100%{transform:translateX(calc(100vw + 250px));}
 }
 </style>
 </head>
 
 <body>
 
-<div class="box b1"></div>
-<div class="box b2"></div>
-<div class="box b3"></div>
-
-<div class="wrapper">
+<div class="container">
 
 <h1>
-<span class="first">First Choice</span>
-<span class="containers">Containers</span>
+<span class="blue">First Choice</span>
+<span class="red">Containers</span>
 </h1>
 
-<p>Please wait while we prepare your application...</p>
+<p>Please wait while we prepare your request...</p>
 
-<div class="spinner"></div>
-
-<div id="status">Starting...</div>
+<div class="loader"></div>
 
 <div class="progress">
 <div class="bar"></div>
 </div>
 
-<div class="footer">
-Powered by First Choice Containers
+<div id="countdown">
+Redirecting in 3...
 </div>
 
 </div>
 
 <script>
+const APPS_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbwEhnPgwywvIHbZlaWlkXZbfeCnlOFvd_HxjF0U3nfJFdn6cPzkknc88mCxq2Jjmpvg/exec";
 
-const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwEhnPgwywvIHbZlaWlkXZbfeCnlOFvd_HxjF0U3nfJFdn6cPzkknc88mCxq2Jjmpvg/exec";
+let seconds = 3;
 
-const messages=[
-"Loading quotation...",
-"Connecting securely...",
-"Preparing data...",
-"Almost ready...",
-"Redirecting..."
-];
-
-let i=0;
-
-const status=document.getElementById("status");
-
-status.textContent=messages[0];
-
-const interval=setInterval(()=>{
-    i=(i+1)%messages.length;
-    status.textContent=messages[i];
-},600);
-
-setTimeout(()=>{
-    clearInterval(interval);
-    window.location.href=APPS_SCRIPT_URL+window.location.search;
-},3000);
-
+const timer = setInterval(() => {
+    seconds--;
+    if (seconds > 0) {
+        document.getElementById("countdown").textContent =
+            "Redirecting in " + seconds + "...";
+    } else {
+        clearInterval(timer);
+        document.getElementById("countdown").textContent =
+            "Opening application...";
+        window.location.replace(APPS_SCRIPT_URL + window.location.search);
+    }
+}, 1000);
 </script>
 
 </body>
