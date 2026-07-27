@@ -2,56 +2,62 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>First Choice Containers</title>
 
 <style>
-html,body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
     height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ffffff;
+}
+
+body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#ffffff;
-    font-family:Arial,Helvetica,sans-serif;
 }
 
 .container{
     text-align:center;
+    padding:20px;
 }
 
-.logo{
-    font-size:34px;
-    font-weight:bold;
-    margin-bottom:20px;
-}
-
-.first{
-    color:#0078D4;
-}
-
-.containers{
-    color:#E53935;
+.company-logo{
+    width:340px;
+    max-width:90vw;
+    height:auto;
+    margin-bottom:25px;
 }
 
 .spinner{
-    width:48px;
-    height:48px;
-    margin:20px auto;
-    border:4px solid #ddd;
-    border-top:4px solid #0078D4;
+    width:54px;
+    height:54px;
+    margin:0 auto 20px;
+    border:5px solid #e5e5e5;
+    border-top:5px solid #2E63D7;
     border-radius:50%;
     animation:spin .8s linear infinite;
 }
 
-.text{
+.loading-text{
+    font-size:18px;
     color:#555;
-    font-size:16px;
+    font-weight:600;
 }
 
 @keyframes spin{
-    to{transform:rotate(360deg);}
+    to{
+        transform:rotate(360deg);
+    }
 }
 </style>
 </head>
@@ -59,26 +65,30 @@ html,body{
 <body>
 
 <div class="container">
-    <div class="logo">
-        <span class="first">First Choice</span>
-        <span class="containers">Containers</span>
-    </div>
+
+    <img
+        src="logo.png"
+        alt="First Choice Containers"
+        class="company-logo">
 
     <div class="spinner"></div>
 
-    <div class="text">
-        Opening application...
+    <div class="loading-text">
+        Opening Application...
     </div>
+
 </div>
 
 <script>
-const APPS_SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbwEhnPgwywvIHbZlaWlkXZbfeCnlOFvd_HxjF0U3nfJFdn6cPzkknc88mCxq2Jjmpvg/exec";
 
-// Redirect immediately while the loading page is already visible
-requestAnimationFrame(() => {
-    window.location.replace(APPS_SCRIPT_URL + window.location.search);
-});
+const APPS_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbxwbVlUeJxYeM0ZJi8fD-CseissJBsEtOquUnWm3KzolPx80lHJrU7Eb7LvasWQeJWI/exec";
+
+// Keep all AppSheet query parameters
+window.location.replace(
+    APPS_SCRIPT_URL + window.location.search
+);
+
 </script>
 
 </body>
