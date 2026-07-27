@@ -2,220 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>First Choice Containers</title>
 
 <style>
-*{
+html,body{
     margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Segoe UI,Arial,sans-serif;
-}
-
-body{
-    background:linear-gradient(135deg,#0057B8,#1E88E5);
-    color:#fff;
+    height:100%;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    overflow:hidden;
+    background:#ffffff;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .container{
     text-align:center;
-    width:90%;
-    max-width:550px;
 }
 
 .logo{
-    font-size:42px;
-    font-weight:700;
-    margin-bottom:15px;
+    font-size:34px;
+    font-weight:bold;
+    margin-bottom:20px;
 }
 
 .first{
-    color:#4FC3F7;
+    color:#0078D4;
 }
 
 .containers{
-    color:#FF3B30;
+    color:#E53935;
 }
 
-.subtitle{
-    font-size:18px;
-    opacity:.9;
-    margin-bottom:35px;
-}
-
-.loader{
-    width:90px;
-    height:90px;
-    margin:auto;
-    border-radius:50%;
-    border:8px solid rgba(255,255,255,.2);
-    border-top:8px solid #fff;
-    animation:spin 1s linear infinite;
-}
-
-.progress{
-    width:100%;
-    max-width:420px;
-    height:10px;
-    background:rgba(255,255,255,.2);
-    border-radius:20px;
-    overflow:hidden;
-    margin:35px auto 20px;
-}
-
-.bar{
-    width:0%;
-    height:100%;
-    background:linear-gradient(90deg,#4FC3F7,#ffffff,#FF3B30);
-    animation:fill 3s linear forwards;
-}
-
-#status{
-    font-size:20px;
-    font-weight:600;
-}
-
-.footer{
-    margin-top:25px;
-    font-size:14px;
-    opacity:.8;
-}
-
-.box{
-    position:absolute;
-    width:90px;
+.spinner{
+    width:48px;
     height:48px;
-    border:2px solid rgba(255,255,255,.35);
-    border-radius:6px;
-    animation:move 15s linear infinite;
+    margin:20px auto;
+    border:4px solid #ddd;
+    border-top:4px solid #0078D4;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
 }
 
-.box:before{
-    content:"";
-    position:absolute;
-    left:8px;
-    right:8px;
-    top:10px;
-    height:3px;
-    background:white;
-    box-shadow:0 8px white,0 16px white;
-}
-
-.b1{
-    top:18%;
-    left:-120px;
-}
-
-.b2{
-    top:50%;
-    left:-180px;
-    animation-delay:5s;
-}
-
-.b3{
-    top:78%;
-    left:-140px;
-    animation-delay:10s;
+.text{
+    color:#555;
+    font-size:16px;
 }
 
 @keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes fill{
-    from{
-        width:0%;
-    }
-    to{
-        width:100%;
-    }
-}
-
-@keyframes move{
-    from{
-        transform:translateX(0);
-    }
-    to{
-        transform:translateX(calc(100vw + 250px));
-    }
+    to{transform:rotate(360deg);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="box b1"></div>
-<div class="box b2"></div>
-<div class="box b3"></div>
-
 <div class="container">
+    <div class="logo">
+        <span class="first">First Choice</span>
+        <span class="containers">Containers</span>
+    </div>
 
-<div class="logo">
-<span class="first">First Choice</span>
-<span class="containers">Containers</span>
-</div>
+    <div class="spinner"></div>
 
-<div class="subtitle">
-Please wait while we prepare your request...
-</div>
-
-<div class="loader"></div>
-
-<div class="progress">
-<div class="bar"></div>
-</div>
-
-<div id="status">Redirecting in 3...</div>
-
-<div class="footer">
-Powered by First Choice Containers
-</div>
-
+    <div class="text">
+        Opening application...
+    </div>
 </div>
 
 <script>
 const APPS_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbwEhnPgwywvIHbZlaWlkXZbfeCnlOFvd_HxjF0U3nfJFdn6cPzkknc88mCxq2Jjmpvg/exec";
 
-// Preserve every query parameter from AppSheet
-const query = window.location.search;
-
-let seconds = 3;
-const status = document.getElementById("status");
-
-const timer = setInterval(() => {
-
-    seconds--;
-
-    if(seconds > 0){
-
-        status.textContent = "Redirecting in " + seconds + "...";
-
-    }else{
-
-        clearInterval(timer);
-
-        status.textContent = "Opening First Choice Containers...";
-
-        // Small delay so the last message is visible
-        setTimeout(function(){
-
-            window.location.replace(APPS_SCRIPT_URL + query);
-
-        },500);
-
-    }
-
-},1000);
+// Redirect immediately while the loading page is already visible
+requestAnimationFrame(() => {
+    window.location.replace(APPS_SCRIPT_URL + window.location.search);
+});
 </script>
 
 </body>
